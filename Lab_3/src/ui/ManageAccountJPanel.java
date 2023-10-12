@@ -66,6 +66,8 @@ public class ManageAccountJPanel extends javax.swing.JPanel {
         btnDelete = new javax.swing.JButton();
         btnView = new javax.swing.JButton();
 
+        setBackground(new java.awt.Color(0, 153, 153));
+
         tblAccountDirectory.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null}

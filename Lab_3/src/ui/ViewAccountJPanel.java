@@ -71,6 +71,8 @@ public class ViewAccountJPanel extends javax.swing.JPanel {
         btnSave = new javax.swing.JButton();
         btnBack = new javax.swing.JButton();
 
+        setBackground(new java.awt.Color(0, 153, 153));
+
         jLabel1.setFont(new java.awt.Font("Lucida Grande", 1, 14)); // NOI18N
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("View Account");
@@ -177,6 +179,16 @@ public class ViewAccountJPanel extends javax.swing.JPanel {
         try{
             routingNo = Integer.parseInt(txtRoutingNumber.getText());
             accountNo = Integer.parseInt(txtAccountNumber.getText());
+            
+            if(bankName.length() <= 0){
+                JOptionPane.showMessageDialog(null, "Please enter all fields!"); 
+                return;
+            }
+            
+            if(!isString(bankName)){
+                JOptionPane.showMessageDialog(null, "Please enter valid Bank name"); 
+                return;
+            }
         }catch(NumberFormatException ex){
             JOptionPane.showMessageDialog(null, "Invalid input!");
             return;
@@ -192,6 +204,10 @@ public class ViewAccountJPanel extends javax.swing.JPanel {
         JOptionPane.showMessageDialog(null, "Account updated Successfully!");
     }//GEN-LAST:event_btnSaveActionPerformed
 
+    private static boolean isString(String input) {
+        return input.matches("[a-zA-Z\\s]+");
+    }
+    
     private void btnBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackActionPerformed
         // TODO add your handling code here:
         

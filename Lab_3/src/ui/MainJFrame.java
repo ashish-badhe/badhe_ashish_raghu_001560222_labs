@@ -38,9 +38,13 @@ public class MainJFrame extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
+        userProcessContainer.setBackground(new java.awt.Color(0, 153, 153));
         userProcessContainer.setLayout(new java.awt.CardLayout());
         jSplitPane1.setRightComponent(userProcessContainer);
 
+        controlPanel.setBackground(new java.awt.Color(0, 204, 204));
+
+        btnAccountMgr.setBackground(new java.awt.Color(204, 204, 204));
         btnAccountMgr.setText("Account Manager");
         btnAccountMgr.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {

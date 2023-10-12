@@ -48,6 +48,8 @@ public class CreateAccountJPanel extends javax.swing.JPanel {
         btnCreate = new javax.swing.JButton();
         btnBack = new javax.swing.JButton();
 
+        setBackground(new java.awt.Color(0, 153, 153));
+
         lblTitle.setFont(new java.awt.Font("Lucida Grande", 1, 18)); // NOI18N
         lblTitle.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblTitle.setText("Create Account");
@@ -144,16 +146,21 @@ public class CreateAccountJPanel extends javax.swing.JPanel {
         int accountNo;
         String bankName = txtBankName.getText();
         int balance;
-        
-        if(bankName.length() <= 0){
-            JOptionPane.showMessageDialog(null, "Please enter all fields!"); 
-            return;
-        }
 
         try{
             routingNo = Integer.parseInt(txtRoutingNumber.getText());
             accountNo = Integer.parseInt(txtAccountNumber.getText());
             balance = Integer.parseInt(txtBalance.getText());
+
+            if(bankName.length() <= 0){
+                JOptionPane.showMessageDialog(null, "Please enter all fields!"); 
+                return;
+            }
+
+            if(!isString(bankName)){
+                JOptionPane.showMessageDialog(null, "Please enter valid Bank name"); 
+                return;
+            }
         }catch(NumberFormatException ex){
             JOptionPane.showMessageDialog(null, "Invalid input!");
             return;
@@ -168,6 +175,9 @@ public class CreateAccountJPanel extends javax.swing.JPanel {
         JOptionPane.showMessageDialog(null, "Account Created Successfully!");
     }//GEN-LAST:event_btnCreateActionPerformed
 
+    private static boolean isString(String input) {
+        return input.matches("[a-zA-Z\\s]+");
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnBack;

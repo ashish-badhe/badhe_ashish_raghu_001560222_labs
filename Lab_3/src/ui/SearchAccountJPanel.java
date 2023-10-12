@@ -68,6 +68,8 @@ public class SearchAccountJPanel extends javax.swing.JPanel {
         txtBalance = new javax.swing.JTextField();
         btnBack = new javax.swing.JButton();
 
+        setBackground(new java.awt.Color(0, 153, 153));
+
         jLabel1.setFont(new java.awt.Font("Lucida Grande", 1, 18)); // NOI18N
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("Search Result");
