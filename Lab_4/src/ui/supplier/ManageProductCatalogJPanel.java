@@ -11,6 +11,7 @@ import java.awt.CardLayout;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.table.DefaultTableModel;
+import model.FeatureList;
 
 /**
  *
@@ -20,14 +21,17 @@ public class ManageProductCatalogJPanel extends javax.swing.JPanel {
 
     JPanel workArea;
     Supplier supplier;
+    FeatureList featureList;
 
     /**
      * Creates new form ManageProductCatalogJPanel
      */
-    public ManageProductCatalogJPanel(JPanel workArea, Supplier supplier) {
+    public ManageProductCatalogJPanel(JPanel workArea, Supplier supplier, FeatureList featureList) {
         initComponents();
         this.workArea = workArea;
         this.supplier = supplier;
+        
+        this.featureList = featureList;
         
         if(supplier.getLogoImage() != null){
             imgLogo.setIcon(supplier.getLogoImage());
@@ -70,6 +74,7 @@ public class ManageProductCatalogJPanel extends javax.swing.JPanel {
         btnSearch = new javax.swing.JButton();
         btnDelete = new javax.swing.JButton();
         imgLogo = new javax.swing.JLabel();
+        btnSearchByFeatures = new javax.swing.JButton();
 
         setBackground(new java.awt.Color(255, 255, 255));
 
@@ -85,8 +90,22 @@ public class ManageProductCatalogJPanel extends javax.swing.JPanel {
             new String [] {
                 "Product Name", "Product ID", "Price"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        tblProducts.getTableHeader().setReorderingAllowed(false);
         jScrollPane1.setViewportView(tblProducts);
+        if (tblProducts.getColumnModel().getColumnCount() > 0) {
+            tblProducts.getColumnModel().getColumn(0).setResizable(false);
+            tblProducts.getColumnModel().getColumn(1).setResizable(false);
+            tblProducts.getColumnModel().getColumn(2).setResizable(false);
+        }
 
         btnView.setText("View Details...");
         btnView.addActionListener(new java.awt.event.ActionListener() {
@@ -102,7 +121,7 @@ public class ManageProductCatalogJPanel extends javax.swing.JPanel {
             }
         });
 
-        btnSearch.setText("Search");
+        btnSearch.setText("Search by Id");
         btnSearch.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnSearchActionPerformed(evt);
@@ -118,6 +137,13 @@ public class ManageProductCatalogJPanel extends javax.swing.JPanel {
 
         imgLogo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
 
+        btnSearchByFeatures.setText("Search by Features");
+        btnSearchByFeatures.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSearchByFeaturesActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -127,21 +153,23 @@ public class ManageProductCatalogJPanel extends javax.swing.JPanel {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(lblTitle)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(btnSearch)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 534, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(imgLogo, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(btnSearchByFeatures, javax.swing.GroupLayout.DEFAULT_SIZE, 167, Short.MAX_VALUE)
+                            .addComponent(btnSearch, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addGap(18, 18, 18)
                         .addComponent(btnCreate)
                         .addGap(18, 18, 18)
                         .addComponent(btnView)
                         .addGap(18, 18, 18)
-                        .addComponent(btnDelete))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 534, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(imgLogo, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(btnDelete)))
                 .addContainerGap(64, Short.MAX_VALUE))
         );
 
-        layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {btnCreate, btnDelete, btnSearch, btnView});
+        layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {btnCreate, btnDelete, btnView});
 
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -160,7 +188,9 @@ public class ManageProductCatalogJPanel extends javax.swing.JPanel {
                     .addComponent(btnView)
                     .addComponent(btnCreate)
                     .addComponent(btnSearch))
-                .addGap(361, 361, 361))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnSearchByFeatures)
+                .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
     private void btnViewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnViewActionPerformed
@@ -175,7 +205,7 @@ public class ManageProductCatalogJPanel extends javax.swing.JPanel {
         
         Product p = (Product)tblProducts.getValueAt(selectedRow, 0);
         
-        ViewProductDetailJPanel viewProductDetailPanel = new ViewProductDetailJPanel(workArea, p);
+        ViewProductDetailJPanel viewProductDetailPanel = new ViewProductDetailJPanel(workArea, p, featureList);
         workArea.add("ViewProductDetailPanel", viewProductDetailPanel);
         CardLayout layout = (CardLayout) workArea.getLayout();
         layout.next(workArea);
@@ -209,10 +239,20 @@ public class ManageProductCatalogJPanel extends javax.swing.JPanel {
         supplier.getProductCatalog().removeProduct(p);
         refreshTable();
     }//GEN-LAST:event_btnDeleteActionPerformed
+
+    private void btnSearchByFeaturesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSearchByFeaturesActionPerformed
+        // TODO add your handling code here:
+        SearchProductByFeature searchPanel = new SearchProductByFeature(workArea, supplier);
+        workArea.add("SearchProductByFeaturePanel", searchPanel);
+        CardLayout layout = (CardLayout) workArea.getLayout();
+        layout.next(workArea);
+    }//GEN-LAST:event_btnSearchByFeaturesActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCreate;
     private javax.swing.JButton btnDelete;
     private javax.swing.JButton btnSearch;
+    private javax.swing.JButton btnSearchByFeatures;
     private javax.swing.JButton btnView;
     private javax.swing.JLabel imgLogo;
     private javax.swing.JScrollPane jScrollPane1;

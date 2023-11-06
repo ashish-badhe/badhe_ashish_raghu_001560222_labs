@@ -9,6 +9,7 @@ import model.Supplier;
 import java.awt.CardLayout;
 import java.awt.Component;
 import javax.swing.JPanel;
+import model.FeatureList;
 import ui.LoginScreen;
 
 /**
@@ -19,15 +20,18 @@ public class SupplierWorkAreaJPanel extends javax.swing.JPanel {
 
     JPanel mainWorkArea;
     Supplier supplier;
+    FeatureList featureList;
 //    MasterOrderCatalog masterOrderCatalog;
 
     /**
      * Creates new form ProductManagerWorkAreaJPanel
      */
-    public SupplierWorkAreaJPanel(JPanel mainWorkArea, Supplier supplier) {
+    public SupplierWorkAreaJPanel(JPanel mainWorkArea, Supplier supplier, FeatureList featureList) {
 
         initComponents();
         this.mainWorkArea = mainWorkArea;
+        
+       this.featureList = featureList;
         
         this.supplier = supplier;
         if (supplier != null) lblWelcome.setText("Welcome to Lab 4, "+supplier.getSupplyName());
@@ -158,7 +162,7 @@ public class SupplierWorkAreaJPanel extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
     private void btnManageProductCatalogActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnManageProductCatalogActionPerformed
         // TODO add your handling code here:
-        ManageProductCatalogJPanel mpcjp = new ManageProductCatalogJPanel(workArea, supplier);
+        ManageProductCatalogJPanel mpcjp = new ManageProductCatalogJPanel(workArea, supplier, featureList);
         workArea.add("ManageProductCatalogJPanel", mpcjp);
         CardLayout layout = (CardLayout) workArea.getLayout();
         layout.next(workArea);

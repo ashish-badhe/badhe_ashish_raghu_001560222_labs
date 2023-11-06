@@ -6,6 +6,7 @@
 package ui;
 
 import java.awt.CardLayout;
+import model.FeatureList;
 import model.Supplier;
 import model.SupplierDirectory;
 
@@ -16,12 +17,15 @@ import model.SupplierDirectory;
 public class MainJFrame extends javax.swing.JFrame {
 
     SupplierDirectory supplierDirectory;
+    FeatureList featureList;
     
     /**
      * Creates new form MainJFrame
      */
     public MainJFrame() {
         initComponents();
+        
+        this.featureList = new FeatureList();
         
         supplierDirectory = new SupplierDirectory();
         setSize(800,600);
@@ -98,7 +102,7 @@ public class MainJFrame extends javax.swing.JFrame {
 
     private void setLoginScreen() {
 
-        LoginScreen loginScreenPanel = new LoginScreen(mainWorkArea, supplierDirectory);
+        LoginScreen loginScreenPanel = new LoginScreen(mainWorkArea, supplierDirectory, featureList);
         mainWorkArea.add("LoginScreen", loginScreenPanel);
         CardLayout layout =  (CardLayout) mainWorkArea.getLayout();
         layout.next(mainWorkArea);

@@ -12,6 +12,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.table.DefaultTableModel;
 import model.Feature;
+import model.FeatureList;
 
 /**
  *
@@ -21,14 +22,16 @@ public class ViewProductDetailJPanel extends javax.swing.JPanel {
 
     JPanel workArea;
     Product product;
-
+    FeatureList featureList;
     /**
      * Creates new form CreateProductJPanel
      */
-    public ViewProductDetailJPanel(JPanel workArea, Product product) {
+    public ViewProductDetailJPanel(JPanel workArea, Product product,FeatureList featureList) {
         initComponents();
         this.workArea = workArea;
         this.product = product;
+        
+        this.featureList = featureList;
 
         txtName.setText(this.product.getName());
         txtId.setText(String.valueOf(this.product.getId()));
@@ -271,6 +274,7 @@ public class ViewProductDetailJPanel extends javax.swing.JPanel {
            currentFeature.setName(tblFeatures.getValueAt(i,0).toString());
            currentFeature.setValue(tblFeatures.getValueAt(i,1).toString());
        }
+       
     }
 
     private void btnAddFeatureActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddFeatureActionPerformed

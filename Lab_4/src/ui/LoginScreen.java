@@ -8,6 +8,7 @@ package ui;
 import java.awt.CardLayout;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import model.FeatureList;
 import model.Supplier;
 import model.SupplierDirectory;
 import ui.admin.AdminWorkAreaJPanel;
@@ -22,16 +23,18 @@ public class LoginScreen extends javax.swing.JPanel {
     JPanel mainWorkArea;
     SupplierDirectory supplierDirectory;
     Supplier selectedSupplier = null;
-    
+    FeatureList featureList;
     
     /**
      * Creates new form LoginScreen
      */
-    public LoginScreen(JPanel mainWorkArea, SupplierDirectory supplierDirectory) {
+    public LoginScreen(JPanel mainWorkArea, SupplierDirectory supplierDirectory, FeatureList featureList) {
         initComponents();
         
         this.mainWorkArea = mainWorkArea;
         this.supplierDirectory = supplierDirectory;
+        
+        this.featureList = featureList;
         
         populateRoleCombo();
         populateSupplierCombo();
@@ -142,7 +145,7 @@ public class LoginScreen extends javax.swing.JPanel {
                 JOptionPane.showMessageDialog(this, "Please select a supplier to login as a supplier");
                 return;
             }else{
-                selectedPanel = new SupplierWorkAreaJPanel(mainWorkArea, selectedSupplier);
+                selectedPanel = new SupplierWorkAreaJPanel(mainWorkArea, selectedSupplier, featureList);
             }
         }
         
@@ -162,7 +165,7 @@ public class LoginScreen extends javax.swing.JPanel {
         cmbRoles.removeAllItems();
         
         AdminWorkAreaJPanel adminWorkAreaPanel = new AdminWorkAreaJPanel(mainWorkArea, supplierDirectory);
-        SupplierWorkAreaJPanel supplierWorkAreaPanel = new SupplierWorkAreaJPanel(mainWorkArea, selectedSupplier);
+        SupplierWorkAreaJPanel supplierWorkAreaPanel = new SupplierWorkAreaJPanel(mainWorkArea, selectedSupplier, featureList);
       
         cmbRoles.addItem(adminWorkAreaPanel);
         cmbRoles.addItem(supplierWorkAreaPanel);

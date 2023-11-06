@@ -208,7 +208,7 @@ public class SupplierMyProfileJPanel extends javax.swing.JPanel {
         btnRemove.setEnabled(false);
         
         supplier.setSupplyName(txtName.getText());
-        supplier.setLogoImage(logoImage);
+        supplier.setLogoImage((ImageIcon) imgLogo.getIcon());
         
         JOptionPane.showMessageDialog(this, "Profile Updated Successfully", "Information", JOptionPane.INFORMATION_MESSAGE);
     }//GEN-LAST:event_btnSaveActionPerformed
