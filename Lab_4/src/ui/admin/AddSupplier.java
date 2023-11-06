@@ -190,6 +190,11 @@ public class AddSupplier extends javax.swing.JPanel {
 
     private void btnAddSupplierActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddSupplierActionPerformed
         // TODO add your handling code here:
+        if(txtName.getText().isEmpty()){
+            JOptionPane.showMessageDialog(this, "Please enter supplier name", "Warning", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+        
         Supplier supplier = supplierDirectory.addSupplier();
         supplier.setSupplyName(txtName.getText());
         supplier.setLogoImage(logoImage);

@@ -198,11 +198,17 @@ public class CreateNewProductJPanel extends javax.swing.JPanel {
                             .addComponent(imgLogo, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnAdd)))
-                .addGap(260, 260, 260))
+                .addGap(234, 234, 234))
         );
     }// </editor-fold>//GEN-END:initComponents
     private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
         // TODO add your handling code here:
+        
+         if(txtName.getText().isEmpty()){
+            JOptionPane.showMessageDialog(this, "Please enter product name", "Warning", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+                
         Product product = supplier.getProductCatalog().addProduct();
         product.setName(txtName.getText());
         product.setProductImage(productImage);
